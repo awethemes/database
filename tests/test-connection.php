@@ -1,5 +1,6 @@
 <?php
 
+use Awethemes\Database\Database;
 use Awethemes\Database\Connection;
 
 class Connection_Test extends WP_UnitTestCase {
@@ -53,6 +54,12 @@ class Connection_Test extends WP_UnitTestCase {
 	 */
 	public function testQueryException() {
 		$this->getBuilder()->select( '*' )->from( 'not_found' )->get();
+	}
+
+	public function testUseDatabase() {
+		global $wpdb;
+		$builder = Database::newQuery()->select( '*' )->from( 'posts' );
+		$this->assertEquals( "select * from `{$wpdb->posts}`", $builder->toSql() );
 	}
 
 	/**

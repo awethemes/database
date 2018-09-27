@@ -17,6 +17,7 @@ use Database\ConnectionInterface;
  * @method static bool                                           logging()
  * @method static \Awethemes\Database\Connection                 enableQueryLog()
  * @method static \Awethemes\Database\Connection                 disableQueryLog()
+ * @method static \Awethemes\Database\Builder                    newQuery()
  *
  * @package Awethemes\WP_Object\Database
  */
