@@ -61,6 +61,10 @@ class Connection_Test extends WP_UnitTestCase {
 		$builder = Database::newQuery()->select( '*' )->from( 'posts' );
 		$this->assertEquals( "select * from `{$wpdb->posts}`", $builder->toSql() );
 	}
+	
+	public function testDatabaseAliases() {
+		$this->assertInstanceOf( \Awethemes\Database\Builder::class, Database::table( 'posts' ) );
+	}
 
 	/**
 	 * @return \Awethemes\Database\Builder
