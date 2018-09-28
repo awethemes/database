@@ -26,3 +26,6 @@ The query above can be shorten by this:
 ```php
 $posts = Database::table( 'posts' )->get();
 ```
+## Documents
+
+https://laravel.com/docs/5.4/queries
