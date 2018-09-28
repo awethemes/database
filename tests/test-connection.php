@@ -62,6 +62,36 @@ class Connection_Test extends WP_UnitTestCase {
 		$this->assertEquals( "select * from `{$wpdb->posts}`", $builder->toSql() );
 	}
 
+	public function testInsert() {
+		$insert = $this->connection->table( 'posts' )->insert([
+			'post_title' => 'b',
+		]);
+
+		$this->assertInternalType( 'bool', $insert );
+	}
+
+	public function testLimitsAndOffsets()
+	{
+		global $wpdb;
+
+		$builder = $this->getBuilder();
+		$builder->select('*')->from('users')->offset(5)->limit(10);
+
+		$this->assertEquals("select * from `{$wpdb->users}` limit 10 offset 5", $builder->toSql());
+		$builder = $this->getBuilder();
+
+		$builder->select('*')->from('users')->skip(5)->take(10);
+		$this->assertEquals("select * from `{$wpdb->users}` limit 10 offset 5", $builder->toSql());
+
+		$builder = $this->getBuilder();
+		$builder->select('*')->from('users')->skip(0)->take(0);
+		$this->assertEquals("select * from `{$wpdb->users}` offset 0", $builder->toSql());
+
+		$builder = $this->getBuilder();
+		$builder->select('*')->from('users')->skip(-5)->take(-10);
+		$this->assertEquals("select * from `{$wpdb->users}` offset 0", $builder->toSql());
+	}
+
 	/**
 	 * @return \Awethemes\Database\Builder
 	 */
